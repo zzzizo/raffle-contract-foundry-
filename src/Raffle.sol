@@ -146,5 +146,5 @@ abstract contract Raffle is VRFConsumerBaseV2Plus {
         }
     }
 
-    /** Getter function */
+    /**getter fucntion  */
 }
