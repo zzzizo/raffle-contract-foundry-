@@ -51,7 +51,7 @@ contract Helperconfig is CodeConstants, Script {
     }
 
     function GetorCreateAnvilETHconfig() public returns (NetworkConfig memory) {
-        // check to see  if we have any active network config
+        // check to see  if we have any activenetwork config
         if (localNetworkconfig.vrfCoordinator != address(0)) {
             return localNetworkconfig;
         }
