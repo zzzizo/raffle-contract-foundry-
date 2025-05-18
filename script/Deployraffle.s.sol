@@ -9,5 +9,5 @@ import {Helperconfig} from "./HelperConfig.s.sol";
 contract DeployRaffle is Script {
     function run() public {}
 
-    function Deploycontract() public returns (Raffle, Helperconfig) {}
+    function Deploycontract() public returns (Raffle, Helperconfig) {} //function for deploymet of the contract
 }

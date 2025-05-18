@@ -6,11 +6,11 @@ import {Script} from "forge-std/Script.sol";
 
 abstract contract CodeConstants{
     uint256 public constant SEPOLIA_ETH_CHAINID = 1115511;
-    uint256 public constant ANVIL_CHAINID = ;
+    uint256 public constant ANVIL_CHAINID = 31337 ;
 
 }
 
-contract Helperconfig is CodeConstants,Script {
+contract Helperconfig is CodeConstants,Script {   
     struct NetworkConfig {
         uint256 advanceFee;
         uint256 interval;
@@ -39,7 +39,7 @@ contract Helperconfig is CodeConstants,Script {
 
                 
         })
-
-        
     }
+        
+    
 }
