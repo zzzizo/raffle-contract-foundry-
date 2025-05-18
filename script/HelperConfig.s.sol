@@ -32,7 +32,7 @@ contract Helperconfig is CodeConstants, Script {
         if (networkconfigs[chainID].vrfCoordinator != address(0)) {
             return networkconfigs[chainID];
         } else if (chainID == LOCAL_CHAIN_ID) {
-            //GetorcreateLOCALchainid
+            GetorCreateAnvilETHconfig();
         } else {
             revert Helperconfig_invalidchainid();
         }
@@ -48,5 +48,12 @@ contract Helperconfig is CodeConstants, Script {
                 subscriptionid: 0,
                 callbackgaslimit: 500000 //500,000 gas
             });
+    }
+
+    function GetorCreateAnvilETHconfig() public returns (NetworkConfig memory) {
+        // check to see  if we have any active network config
+        if (localNetworkconfig.vrfCoordinator != address(0)) {
+            return localNetworkconfig;
+        }
     }
 }
