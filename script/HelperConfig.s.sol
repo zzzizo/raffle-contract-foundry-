@@ -12,7 +12,7 @@ abstract contract CodeConstants {
     uint96 public MOCK_GAS_PRICE = 1e9;
 
     // LINK/ETH
-    uint256 public MOCK_WEI_PER_UINT_LINK = 4e15;
+    int256 public MOCK_WEI_PER_UINT_LINK = 4e15;
 
     uint256 public constant SEPOLIA_ETH_CHAINID = 1115511;
     uint256 public constant LOCAL_CHAIN_ID = 31337;
@@ -47,6 +47,10 @@ contract Helperconfig is CodeConstants, Script {
         }
     }
 
+    function getConfig() public pure returns (NetworkConfig memory) {
+        return getConfigByChainid(block.chainid);
+    }
+
     function getSepoliaETHconfig() public pure returns (NetworkConfig memory) {
         return
             NetworkConfig({
@@ -68,7 +72,24 @@ contract Helperconfig is CodeConstants, Script {
         // here would be our mocks deployed
 
         vm.startBroadcast();
+        VRFCoordinatorV2_5Mock vrfCoordinatorMOCK = new VRFCoordinatorV2_5Mock(
+            MOCK_BASE_FEE,
+            MOCK_GAS_PRICE,
+            MOCK_WEI_PER_UINT_LINK
+        );
 
         vm.stopBroadcast();
+
+        localNetworkconfig = NetworkConfig({
+            advanceFee: 0.01 ether, //1e16;
+            interval: 30, // 30 seconds
+            vrfCoordinator: address(vrfCoordinatorMOCK), //address for sepolia from chainlink vrf
+            //doesnt matter
+            gasLane: 0x8472ba59cf7134dfe321f4d61a430c4857e8b19cdd5230b09952a92671c24409,
+            subscriptionid: 0, // might fix it
+            callbackgaslimit: 500000 //500,000 gas
+        });
+
+        return localNetworkconfig;
     }
 }
