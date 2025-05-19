@@ -3,8 +3,17 @@
 pragma solidity 0.8.19;
 
 import {Script} from "forge-std/Script.sol";
+import {VRFCoordinatorV2_5Mock} from "@chainlink/contracts/src/v0.8/vrf/mocks/VRFCoordinatorV2_5Mock.sol";
 
 abstract contract CodeConstants {
+    /** mock values declared here */
+
+    uint96 public MOCK_BASE_FEE = 0.25 ether;
+    uint96 public MOCK_GAS_PRICE = 1e9;
+
+    // LINK/ETH
+    uint256 public MOCK_WEI_PER_UINT_LINK = 4e15;
+
     uint256 public constant SEPOLIA_ETH_CHAINID = 1115511;
     uint256 public constant LOCAL_CHAIN_ID = 31337;
 }
@@ -55,5 +64,11 @@ contract Helperconfig is CodeConstants, Script {
         if (localNetworkconfig.vrfCoordinator != address(0)) {
             return localNetworkconfig;
         }
+
+        // here would be our mocks deployed
+
+        vm.startBroadcast();
+
+        vm.stopBroadcast();
     }
 }
