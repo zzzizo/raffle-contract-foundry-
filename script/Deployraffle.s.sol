@@ -22,7 +22,7 @@ contract DeployRaffle is Script {
             config.interval,
             config.vrfCoordinator,
             config.gasLane,
-            config.subscription_id,
+            config.subscriptionid,
             config.callbackgaslimit
         );
 

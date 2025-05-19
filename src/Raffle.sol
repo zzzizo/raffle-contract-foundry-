@@ -4,7 +4,7 @@ pragma solidity 0.8.19;
 import {VRFConsumerBaseV2Plus} from "@chainlink/contracts/src/v0.8/vrf/dev/VRFConsumerBaseV2Plus.sol";
 import {VRFV2PlusClient} from "@chainlink/contracts/src/v0.8/vrf/dev/libraries/VRFV2PlusClient.sol";
 
-abstract contract Raffle is VRFConsumerBaseV2Plus {
+contract Raffle is VRFConsumerBaseV2Plus {
     /** Errors */
     error raffle_sendmoreeth();
     error raffle_transferFailed();
@@ -45,14 +45,14 @@ abstract contract Raffle is VRFConsumerBaseV2Plus {
         uint256 interval,
         address vrfCoordinator,
         bytes32 gasLane,
-        uint256 subscription_id,
+        uint256 subscriptionid,
         uint32 callbackgaslimit
     ) VRFConsumerBaseV2Plus(vrfCoordinator) {
         i_advanceFee = advanceFee;
         i_interval = interval;
         lasttimestamp = block.timestamp;
         i_keyHash = gasLane;
-        i_subscription_id = subscription_id;
+        i_subscription_id = subscriptionid;
         i_callbackgaslimit = callbackgaslimit;
     }
 
