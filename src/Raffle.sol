@@ -60,7 +60,7 @@ contract Raffle is VRFConsumerBaseV2Plus {
     function enterRaffle() public payable {
         // checks
 
-        if (msg.value > i_advanceFee) {
+        if (msg.value < i_advanceFee) {
             revert raffle_sendmoreeth();
         }
 

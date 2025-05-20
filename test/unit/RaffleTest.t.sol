@@ -19,6 +19,8 @@ contract Raffletest is Test {
     uint256 subscriptionid;
     uint32 callbackgaslimit;
 
+    address public PLAYER = address(1);
+
     function setUp() external {
         DeployRaffle deployer = new DeployRaffle();
         (raffle, helperconfig) = deployer.Deploycontract();
@@ -31,10 +33,18 @@ contract Raffletest is Test {
         gasLane = config.gasLane;
         subscriptionid = config.subscriptionid;
         callbackgaslimit = config.callbackgaslimit;
+
+        vm.deal(PLAYER, 1 ether); // give PLAYER some ETH for testing
     }
 
     function testRaffleStateinitializedasOPEN() public view {
         // test for raffle state should be initialized as OPEN
         assert(raffle.getRafflestate() == Raffle.raffleState.OPEN);
+    }
+
+    function testRafflerevertsWhenYouDontPayEnoughETH() public {
+        vm.prank(PLAYER);
+        vm.expectRevert(Raffle.raffle_sendmoreeth.selector);
+        raffle.enterRaffle{value: 0}();
     }
 }
