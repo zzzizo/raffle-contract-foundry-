@@ -18,7 +18,7 @@ abstract contract CodeConstants {
     uint256 public constant LOCAL_CHAIN_ID = 31337;
 }
 
-contract Helperconfig is CodeConstants, Script {
+contract HelperConfig is CodeConstants, Script {
     error Helperconfig_invalidchainid();
     struct NetworkConfig {
         uint256 advanceFee;
@@ -41,7 +41,8 @@ contract Helperconfig is CodeConstants, Script {
         if (networkconfigs[chainID].vrfCoordinator != address(0)) {
             return networkconfigs[chainID];
         } else if (chainID == LOCAL_CHAIN_ID) {
-            GetorCreateAnvilETHconfig();
+            networkconfigs[chainID] = GetorCreateAnvilETHconfig(); // 👈 this line is key
+            return networkconfigs[chainID];
         } else {
             revert Helperconfig_invalidchainid();
         }
