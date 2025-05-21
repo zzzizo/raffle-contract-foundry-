@@ -21,6 +21,11 @@ contract Raffletest is Test {
 
     address public PLAYER = address(1);
 
+    //*events//
+
+    event Raffleentered(address indexed player);
+    event Winnerpicked(address indexed winner);
+
     function setUp() external {
         DeployRaffle deployer = new DeployRaffle();
         (raffle, helperconfig) = deployer.Deploycontract();
@@ -45,6 +50,13 @@ contract Raffletest is Test {
     function testRafflerevertsWhenYouDontPayEnoughETH() public {
         vm.prank(PLAYER);
         vm.expectRevert(Raffle.raffle_sendmoreeth.selector);
-        raffle.enterRaffle{value: 0}();
+        raffle.enterRaffle{value: 5}();
+    }
+
+    function testEmitrafflentered() public {
+        vm.prank(PLAYER);
+        vm.expectEmit(true, false, false, false, address(raffle));
+        emit Raffleentered(PLAYER);
+        raffle.enterRaffle{value: advanceFee}();
     }
 }
