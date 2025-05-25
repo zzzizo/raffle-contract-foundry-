@@ -54,9 +54,23 @@ contract Raffletest is Test {
     }
 
     function testEmitrafflentered() public {
+        // test fucntion need to be fixed
         vm.prank(PLAYER);
         vm.expectEmit(true, false, false, false, address(raffle));
         emit Raffleentered(PLAYER);
+        raffle.enterRaffle{value: advanceFee}();
+    }
+
+    function testDontallowPlayerstoEnterRaffleWhileCalculating() public {
+        vm.prank(PLAYER);
+        raffle.enterRaffle{value: advanceFee}();
+        vm.warp(block.timestamp + interval + 1); // means time has passed
+        vm.roll(block.number + 1);
+        raffle.performUpKeep("");
+
+        //act
+        vm.expectRevert(Raffle.raffle_rafflenotOpen.selector);
+        vm.prank(PLAYER);
         raffle.enterRaffle{value: advanceFee}();
     }
 }
