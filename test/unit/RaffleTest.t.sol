@@ -49,7 +49,7 @@ contract Raffletest is Test {
 
     function testRafflerevertsWhenYouDontPayEnoughETH() public {
         vm.prank(PLAYER);
-        vm.expectRevert(Raffle.raffle_sendmoreeth.selector);
+        vm.expectRevert(Raffle.raffle__sendmoreeth.selector);
         raffle.enterRaffle{value: 5}();
     }
 
@@ -69,7 +69,7 @@ contract Raffletest is Test {
         raffle.performUpKeep("");
 
         //act
-        vm.expectRevert(Raffle.raffle_rafflenotOpen.selector);
+        vm.expectRevert(Raffle.raffle__rafflenotOpen.selector);
         vm.prank(PLAYER);
         raffle.enterRaffle{value: advanceFee}();
     }

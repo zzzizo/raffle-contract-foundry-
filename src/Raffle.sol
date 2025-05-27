@@ -6,10 +6,10 @@ import {VRFV2PlusClient} from "@chainlink/contracts/src/v0.8/vrf/dev/libraries/V
 
 contract Raffle is VRFConsumerBaseV2Plus {
     /** Errors */
-    error raffle_sendmoreeth();
-    error raffle_transferFailed();
-    error raffle_rafflenotOpen();
-    error raffle_upKeepNotNeeded(
+    error raffle__sendmoreeth();
+    error raffle__transferFailed();
+    error raffle__rafflenotOpen();
+    error raffle__upKeepNotNeeded(
         uint256 balance,
         uint256 raffleLength,
         uint256 raffleState
@@ -61,13 +61,13 @@ contract Raffle is VRFConsumerBaseV2Plus {
         // checks
 
         if (msg.value < i_advanceFee) {
-            revert raffle_sendmoreeth();
+            revert raffle__sendmoreeth();
         }
 
         s_players.push(payable(msg.sender));
 
         if (s_raffleState != raffleState.OPEN) {
-            revert raffle_rafflenotOpen();
+            revert raffle__rafflenotOpen();
         }
     }
 
@@ -99,7 +99,7 @@ contract Raffle is VRFConsumerBaseV2Plus {
         // checks
         (bool upkeepNeeded, ) = checkUpkeep("");
         if (!upkeepNeeded) {
-            revert raffle_upKeepNotNeeded(
+            revert raffle__upKeepNotNeeded(
                 address(this).balance,
                 s_players.length,
                 uint256(s_raffleState)
@@ -142,7 +142,7 @@ contract Raffle is VRFConsumerBaseV2Plus {
         // interactions (external contract interactions)
         (bool success, ) = recentWinner.call{value: address(this).balance}("");
         if (!success) {
-            revert raffle_transferFailed();
+            revert raffle__transferFailed();
         }
     }
 
